@@ -1,0 +1,10 @@
+#version 330
+
+in vec3 retColor; // Must use same name as out variable used by vertex shader
+
+out vec4 FragColor;
+
+void main()
+{
+	FragColor = vec4(retColor, 1.0f);
+}
