@@ -76,7 +76,7 @@ void Mesh::Cleanup()
 	//m_texture2.CleanUp();
 }
 
-void Mesh::Render(glm::mat4 _wvp, vector<GLfloat> _newVertexData)
+void Mesh::Render(glm::mat4 _wvp)
 {
 	glUseProgram(m_shader->GetProgramID()); // Use our shader
 
@@ -115,8 +115,6 @@ void Mesh::Render(glm::mat4 _wvp, vector<GLfloat> _newVertexData)
 	m_rotation.y += 0.000f;
 	glm::mat4 transform = glm::rotate(_wvp, m_rotation.y, glm::vec3(0, 1, 0));
 	glUniformMatrix4fv(m_shader->GetAttrWVP(), 1, GL_FALSE, &transform[0][0]);
-
-	SetVertexData(_newVertexData);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer); // Bind the vertex buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer); // Bind the index buffer

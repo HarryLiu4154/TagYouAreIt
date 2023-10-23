@@ -26,7 +26,7 @@ Camera::Camera(Resolution _screenResolution)
 		((float)_screenResolution.m_width / 2),
 		-((float)_screenResolution.m_height / 2),
 		((float)_screenResolution.m_height / 2),
-		0.0f,
+		0.1f,
 		100.0f
 	);
 

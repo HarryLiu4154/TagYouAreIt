@@ -16,7 +16,7 @@ public:
 	// Methods
 	void Create(Shader* _shader);
 	void Cleanup();
-	void Render(glm::mat4 _wvp, vector<GLfloat> _newVertexData);
+	void Render(glm::mat4 _wvp);
 	void SetVertexData(vector<GLfloat> _newVertexData);
 
 private:

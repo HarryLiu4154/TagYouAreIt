@@ -20,13 +20,20 @@ public:
 	void Initialize();
 	void RunGame();
 
+	static const glm::vec4 RGBA_PLAYER;
+	static const glm::vec4 RGBA_NOT_TAGGED;
+	static const glm::vec4 RGBA_TAGGED;
+
 private:
 	Shader m_shader;
 	Camera m_camera;
 	Mesh m_mesh;
 
 	std::vector<CharacterTriangle> m_characters;
-	vector<GLfloat> SetMeshVertexData();
+	void SetMeshVertexData(Mesh* mesh);
+	void DetectPlayerMovement();
+	void AddNPCs(int _numberOfNPCs);
+	void CalculateNPCMovement();
 };
 
 #endif // !GAME_CONTROLLER_H

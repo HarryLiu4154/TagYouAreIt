@@ -79,10 +79,11 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\External\glew-2.1.0\include;$(SolutionDir)\External\glm;$(SolutionDir)\External\glfw-3.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\External\glfw-3.3.4\lib-vc2019;$(SolutionDir)\External\glew-2.1.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PreBuildEvent>
       <Command>copy /Y "$(SolutionDir)\External\glew-2.1.0\bin\glew32d.dll" "$(TargetDir)"
