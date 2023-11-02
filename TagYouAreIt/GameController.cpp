@@ -34,7 +34,7 @@ void GameController::Initialize()
 	m_camera = Camera(WindowController::GetInstance().GetResolution());
 
 	m_characters.push_back(CharacterTriangle(glm::vec3(0.0f, 0.0f, 1.0f), CharacterType::PLAYER));
-	AddNPCs(1);
+	AddNPCs(10);
 }
 
 void GameController::SetMeshVertexData(Mesh* _mesh) 
@@ -59,10 +59,10 @@ void GameController::SetMeshVertexData(Mesh* _mesh)
 				character.GetPointA().x,
 				character.GetPointA().y,
 				character.GetPointA().z,
-				RGBA_TAGGED.x,
-				RGBA_TAGGED.y,
-				RGBA_TAGGED.z,
-				RGBA_TAGGED.w,
+				characterColor.x,
+				characterColor.y,
+				characterColor.z,
+				characterColor.w,
 
 				character.GetPointB().x,
 				character.GetPointB().y,
@@ -143,7 +143,7 @@ void GameController::CalculateNPCMovement()
 	glm::vec3 playerPosition = m_characters.front().GetPosition();
 	float movementSpeed = 1.0f;
 	float distanceFromPlayer;
-	float headAngle;
+	float headAngle = 0.0f;
 
 	for (auto& character : m_characters) {
 		if (first) {
@@ -164,15 +164,17 @@ void GameController::CalculateNPCMovement()
 			0.0f
 		));
 
-		// I DON'T KNOW WHY THIS NUMBER KEEP ENDING UP HUGE AND CAUSING THE TRIANGLE ROTATION TO FAIL
-		headAngle = roundf(glm::dot(positionToPlayer, positionToPointA) * 1000) / 1000;
+		headAngle = glm::dot(positionToPlayer, positionToPointA) - (float)M_PI_2;
+		/*if (headAngle <= (float)M_PI) {
+			headAngle = (float)M_PI - headAngle;
+		}*/
 		
 		if (distanceFromPlayer < 200.0f) {
 			character.MoveX(movementSpeed * positionToPlayer.x);
 			character.MoveY(movementSpeed * positionToPlayer.y);
 
 			// CHANGE THIS NUMBER FOR TAG RANGE
-			if (distanceFromPlayer < 25.0f) {
+			if (distanceFromPlayer < 35.0f) {
 				character.SetCharacterType(CharacterType::TAGGED);
 			}
 		}
@@ -182,22 +184,22 @@ void GameController::CalculateNPCMovement()
 		}
 
 		/*character.SetPointA(glm::vec3(
-			(character.GetPointA().x - character.GetPosition().x) * (float)cos(headAngle) - (character.GetPointA().y - character.GetPosition().y) * (float)sin(headAngle) + character.GetPosition().x,
-			(character.GetPointA().y - character.GetPosition().y) * (float)cos(headAngle) + (character.GetPointA().x - character.GetPosition().x) * (float)sin(headAngle) + character.GetPosition().y,
+			((character.GetPointA().x - character.GetPosition().x) * (float)cos(headAngle)) - ((character.GetPointA().y - character.GetPosition().y) * (float)sin(headAngle)) + character.GetPosition().x,
+			((character.GetPointA().y - character.GetPosition().y) * (float)cos(headAngle)) + ((character.GetPointA().x - character.GetPosition().x) * (float)sin(headAngle)) + character.GetPosition().y,
 			0.0f
 		));
 
 		character.SetPointB(glm::vec3(
-			(character.GetPointB().x - character.GetPosition().x) * (float)cos(headAngle) - (character.GetPointB().y - character.GetPosition().y) * (float)sin(headAngle) + character.GetPosition().x,
-			(character.GetPointB().y - character.GetPosition().y) * (float)cos(headAngle) + (character.GetPointB().x - character.GetPosition().x) * (float)sin(headAngle) + character.GetPosition().y,
+			((character.GetPointB().x - character.GetPosition().x) * (float)cos(headAngle)) - ((character.GetPointB().y - character.GetPosition().y) * (float)sin(headAngle)) + character.GetPosition().x,
+			((character.GetPointB().y - character.GetPosition().y) * (float)cos(headAngle)) + ((character.GetPointB().x - character.GetPosition().x) * (float)sin(headAngle)) + character.GetPosition().y,
 			0.0f
 		));
 
 		character.SetPointC(glm::vec3(
-			(character.GetPointC().x - character.GetPosition().x) * (float)cos(headAngle) - (character.GetPointC().y - character.GetPosition().y) * (float)sin(headAngle) + character.GetPosition().x,
-			(character.GetPointC().y - character.GetPosition().y) * (float)cos(headAngle) + (character.GetPointC().x - character.GetPosition().x) * (float)sin(headAngle) + character.GetPosition().y,
+			((character.GetPointC().x - character.GetPosition().x) * (float)cos(headAngle)) - ((character.GetPointC().y - character.GetPosition().y) * (float)sin(headAngle)) + character.GetPosition().x,
+			((character.GetPointC().y - character.GetPosition().y) * (float)cos(headAngle)) + ((character.GetPointC().x - character.GetPosition().x) * (float)sin(headAngle)) + character.GetPosition().y,
 			0.0f
-		));*/
+		)); */
 
 		/*glm::mat4 translateToOrigin = glm::translate(glm::mat4(1.0f), glm::vec3(-playerPosition.x, -playerPosition.y, -playerPosition.z));
 		glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), headAngle, glm::vec3(0, 0, 1));
